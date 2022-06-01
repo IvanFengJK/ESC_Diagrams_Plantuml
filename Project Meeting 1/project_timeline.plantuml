@@ -1,0 +1,14 @@
+@startuml timeline
+!theme toy
+Project starts the 1th of June 2022
+[Review report] starts 2022-06-01 and lasts 3 days
+[Linking database between MongoDB and Elastic Search] starts 2022-06-06 and lasts 1 week
+[Basic list display of Elastic Search result with testing] starts 2022-06-13 and lasts 1 week
+[Aesthetic display of search results in grid view] starts 2022-06-20 and lasts 1 week
+[Interative card profile to link to profile page] starts 2022-06-27 and lasts 1 week
+[Implement 1st iteration of feed front-end] starts 2022-06-06 and lasts 14 day
+[Project Meeting II] starts 2022-07-06 and lasts 1 day
+[Project Meeting III] starts 2022-07-13 and lasts 1 day
+[Project Meeting IV] starts 2022-08-03 and lasts 1 day
+[Project Presentation] starts 2022-08-10 and lasts 1 day
+@enduml

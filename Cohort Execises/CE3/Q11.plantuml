@@ -1,0 +1,20 @@
+@startuml Q11
+!theme toy
+left to right direction
+hide empty description
+
+title Hardware Update Wizard
+
+state updateHardware {
+    [*] --> displayUpdateWindow
+    displayUpdateWindow --> searchingNewHardware : onSearchClick
+    displayUpdateWindow --> [*] : onFinishClick
+    searchingNewHardware --> displayUpdateWindow : onCancelClick
+    searchingNewHardware --> displayNewHardware : onSearchDone
+    displayNewHardware --> [*]: onFinishClick
+}
+
+
+
+
+@enduml

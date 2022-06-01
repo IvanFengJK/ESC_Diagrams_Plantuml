@@ -1,0 +1,28 @@
+@startuml Q10
+!theme toy
+left to right direction
+hide empty description
+
+state handleCalls {
+    [*] --> asLocal
+    asLocal --> waitingRemote: Valid_number / Req
+    waitingRemote --> waitingRemote : Ack
+    waitingRemote --> sendWaitTone : Reply from remote
+    sendWaitTone --> connectSuccess : Connect Success
+    connectSuccess --> sendBusyTone : Disconnect
+    sendWaitTone --> sendBusyTone : Connect Failed
+
+
+    --
+    [*] --> asRemote
+    asRemote --> waitingCallee : Req / Ack, Ringtone
+    waitingCallee --> sendRingTone
+    sendRingTone --> connectSuccess2 : Lift_receiver / Connect Success
+    connectSuccess2 --> sendBusyTone2 : Disconnect
+    sendRingTone --> sendBusyTone2 : Connect Failed
+}
+
+
+
+
+@enduml

@@ -1,0 +1,55 @@
+@startuml Q2
+!theme toy
+participant "S1:Caller" as s1
+participant "T1:Switch" as t1
+participant "S2:Caller" as s2
+participant "S3:Caller" as s3
+
+' S1 makes a call to S2
+s1 -> t1 : Lift_Receiver()
+t1 ->> s1: Send_DialTone()
+s1 -> t1: Dial_Number(N2)
+activate t1
+t1 --[#DDDDDD]> t1 : 
+t1 --[#DDDDDD]> t1 : Check_Number(N2)
+t1 --[#DDDDDD]> t1 : 
+deactivate t1
+
+t1 -> t1: validity
+
+t1 ->> s2: Send_Ringtone()
+t1 ->> s1: Send_WaitTone()
+
+
+
+' S3 send call to S2
+s3 -> t1 : Lift_Receiver()
+t1 ->> s3: Send_DialTone()
+s3 -> t1: Dial_Number(N2)
+activate t1
+t1 --[#DDDDDD]> t1 :
+t1 --[#DDDDDD]> t1 : Check_Number(N2)
+t1 --[#DDDDDD]> t1 : 
+deactivate t1
+
+t1 -> t1: validity
+
+alt s1 receives waittone in <= 1s
+s2 -> t1: Send_ConnectSuccess()
+t1 -> s1: Off_WaitTone()
+activate t1
+
+t1 --[#DDDDDD]> t1 : 
+t1 --[#DDDDDD]> t1 : Establish_Connection(S1, S2)
+t1 --[#DDDDDD]> t1 : 
+
+deactivate t1
+
+else s1 receives waittone in > 1s
+t1 ->> s1: Send_BusyTone()
+s1 -> t1: Drop_Receiver()
+
+end
+
+
+@enduml

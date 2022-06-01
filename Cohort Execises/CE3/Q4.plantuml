@@ -1,0 +1,39 @@
+@startuml Q4
+
+' Question 4 is just question 5 without the arrows
+
+!theme toy
+class "Telephone switch" as switch {
+    + subscribers : set
+    + switches : set
+
+    + getRemoteSwitch(subscriber: Subscriber): Switch
+    + connectRemoteSwitch(subscriber: Subscriber): Boolean
+}
+
+class "Subscriber" as sub {
+    + number: BigInt
+    + localSwitch: Switch
+
+    + getLocalSwitch(): Switch
+    + connectLocalSwitch(): Boolean
+    + connectSubscriber(number: BigInt): Boolean
+}
+
+class "Telephone call" as call {
+    + callee: Subscriber
+    + caller: Subscriber
+    + localSwitch: Switch
+    + remoteSwitch: Switch
+
+    + getLocalSwitch(): Switch
+    + getRemoteSwitch(): Switch
+    + getCaller(): Subscriber
+    + getCallee(): Subscriber
+}
+
+switch "1..*" -- "0..*" sub 
+sub "2" *-- "1" call
+switch "1..*" *-- "0..*" call
+
+@enduml

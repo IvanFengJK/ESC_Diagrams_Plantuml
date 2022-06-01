@@ -1,0 +1,68 @@
+@startuml Q7
+!theme toy
+
+
+class "University" as uni {
+    + classroooms : set
+    + offices : set
+    + departments : set
+
+    + buildClassroom(id)
+    + buildOffice(id)
+    + buildDepartment(name)
+}
+
+class "Department" as dept {
+    + dept_name: String
+    + offices: set
+
+    + reviewCurriculum()
+}
+
+class "Classroom" as cls {
+    + cls_id: number
+    + numseats: number
+
+    + setClassSize()
+}
+class "Office" as off {
+    + off_id: number
+}
+
+
+class "Person" as person {
+    + ID: id
+}
+
+
+class "Professor" as prof {
+    + department: Department
+    + status: full or associate or assistant
+    
+    + setDepartment()
+    + setStatus()
+
+}
+
+class "Employee" as emp {
+    + office: id
+
+}
+
+
+
+uni "1" *-- "*" cls
+uni "1" *-- "*" off
+uni "1" *-- "*" dept
+
+dept "*" *-- "*" off
+
+person "*" <|-- "*" prof
+person "*" <|-- "*" emp
+
+prof "*" <-- "*" dept
+
+emp "*" <-- "*" off
+
+
+@enduml

@@ -1,0 +1,16 @@
+@startuml Q9
+!theme toy
+hide empty description
+
+[*] --> waitForDialTone : Lift Receiver
+waitForDialTone --> waitForDialTone : Keep waiting
+waitForDialTone --> dialingNumber : Add digits
+dialingNumber --> waitForConnection : Valid Number
+
+
+waitForConnection --> waitForConnection : Keep waiting if time is not longer than 10s
+waitForConnection --> [*] : Fails to establish connection in 10s
+waitForConnection --> callEstablished : For Connection established in <= 10s
+callEstablished --> [*] : After the call has ended
+
+@enduml

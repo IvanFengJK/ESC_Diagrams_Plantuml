@@ -1,0 +1,62 @@
+@startuml Q1
+!theme toy
+skinparam BackgroundColor DDDDDD 
+
+participant "S1:Caller" as s1
+participant "T1:Switch" as t1
+participant "S2:Caller" as s2
+participant "S3:Caller" as s3
+' makes a call to S2
+s1 -> t1 : Lift_Receiver()
+t1 ->> s1: Send_DialTone()
+s1 -> t1: Dial_Number(N1)
+activate t1
+t1 --[#DDDDDD]> t1 : Check_Number(N1)
+deactivate t1
+
+t1 -> t1: validity
+
+t1 ->> s2: Send_Ringtone()
+t1 ->> s1: Send_WaitTone()
+
+' S3 send call to S2 while S2 in call with S1
+s3 -> t1 : Lift_Receiver()
+t1 ->> s3: Send_DialTone()
+s3 -> t1: Dial_Number(N1)
+
+activate t1
+t1 --[#DDDDDD]> t1 : Check_Number(N1)
+deactivate t1
+
+t1 -> t1: validity
+
+s2 -> t1: Send_ConnectSuccess()
+t1 ->> s1: Off_WaitTone()
+
+activate t1
+
+t1 --[#DDDDDD]> t1 : 
+t1 --[#DDDDDD]> t1 : Establish_Connection(S1, S2)
+
+' Since S2 is busy, outgoing call by S3 is refused by switch
+t1 ->> s3: Send_BusyTone()
+
+' S1 (caller) terminates call
+s1 -> t1: Drop_Receiver()
+
+deactivate t1
+' Note: There is no need for Send_ReleaseMessage()
+' Since there is no remote switch involved
+' Should this be BusyTone or NoTone???
+t1 ->> s2: Send_BusyTone()
+
+' S3 hangs up
+s3 -> t1: Drop_Receiver()
+
+' S2 (callee) hangs up
+s2 -> t1: Drop_Receiver()
+
+
+
+
+@enduml

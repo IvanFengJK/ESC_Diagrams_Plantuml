@@ -1,0 +1,16 @@
+@startuml Q8
+!theme toy
+hide empty description
+
+[*] --> waitForDialTone : Lift Receiver
+waitForDialTone --> waitForDialTone : Keep waiting
+waitForDialTone --> dialingNumber : Add digits
+dialingNumber --> waitForConnection : Valid Number
+
+
+waitForConnection --> waitForConnection : Wait for connection
+waitForConnection --> [*] : Drop receiver
+waitForConnection --> callEstablished : Connection established
+callEstablished --> [*] : After the call has ended
+
+@enduml

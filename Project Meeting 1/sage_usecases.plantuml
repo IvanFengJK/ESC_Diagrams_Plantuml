@@ -1,0 +1,71 @@
+@startuml sage_use_cases
+!theme toy
+left to right direction
+actor :User: as publicUser
+actor :Sage user: as sage
+
+"Sign up" as (signup)
+"Log in" as (login)
+"Log in as Sage" as (loginAsSage)
+"Log out" as (logout)
+"Send request" as (sendReq)
+"Cancel request" as (cancelReq)
+"Accept request" as (acceptReq)
+"Delete request" as (deleteReq)
+"Edit profile details" as (editProfile)
+"Limit number of connections per month" as (limitConnections)
+"View profile" as (viewProfile)
+"Search for Sages" as (search)
+"View feed" as (viewFeed)
+"Create new post" as (createPost)
+"Comment on post" as (comment)
+"Upvote post" as (upvotePost)
+"Share post" as (sharePost)
+"Report post" as (reportPost)
+"Filter post" as (filterPost)
+"View all requests" as (viewReqs)
+
+(signup) --> (login)
+(login) --> (logout)
+(loginAsSage) --> (logout)
+
+
+publicUser --> (signup)
+publicUser --> (login)
+publicUser --> (viewFeed)
+
+sage --> (signup)
+sage --> (loginAsSage)
+sage --> (viewFeed)
+
+(login) --> (editProfile)
+(login) --> (search)
+(login) --> (viewFeed)
+(login) --> (viewReqs)
+
+(loginAsSage) --> (editProfile)
+(loginAsSage) --> (search)
+(loginAsSage) --> (viewFeed)
+(loginAsSage) --> (viewReqs)
+(viewReqs) --> (acceptReq)      : "if user is Sage"
+(viewReqs) --> (deleteReq)      : "if user is Sage"
+(editProfile) --> (limitConnections) : "if user is Sage"
+
+
+(search) --> (viewProfile)
+(viewFeed) --> (viewProfile) : "if logged in"
+(viewFeed) --> (createPost) : "if logged in"
+(viewFeed) --> (comment) : "if logged in"
+(viewFeed) --> (upvotePost) : "if logged in"
+(viewFeed) --> (sharePost) : "if logged in"
+(viewFeed) --> (reportPost) : "if logged in"
+(viewFeed) --> (filterPost) : "if logged in"
+(viewFeed) --> (sendReq) : "if logged in"
+(viewProfile) --> (sendReq)
+(search) --> (sendReq)
+(viewReqs) --> (cancelReq) : "if user is Sage"
+
+
+
+
+@enduml
