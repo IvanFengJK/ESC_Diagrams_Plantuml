@@ -5,24 +5,23 @@ hide empty description
 
 state handleCalls {
     [*] --> asLocal
-    asLocal --> waitingRemote: Valid_number / Req
-    waitingRemote --> waitingRemote : Ack
-    waitingRemote --> sendWaitTone : Reply from remote
-    sendWaitTone --> connectSuccess : Connect Success
+    asLocal --> sendDialTone : Lift_receiver
+    sendDialTone --> offDialTone : Valid_number / Req
+    offDialTone --> sendWaitTone : waiting for acknowledgement
+    sendWaitTone --> offWaitTone : Connect Success
+    offWaitTone --> connectSuccess : Establish connection
     connectSuccess --> sendBusyTone : Disconnect
     sendWaitTone --> sendBusyTone : Connect Failed
-
-
+    sendBusyTone --> [*]
     --
     [*] --> asRemote
     asRemote --> waitingCallee : Req / Ack, Ringtone
     waitingCallee --> sendRingTone
-    sendRingTone --> connectSuccess2 : Lift_receiver / Connect Success
+    sendRingTone --> offRingTong : Lift_receiver
+    offRingTong --> connectSuccess2 : Connect Success
     connectSuccess2 --> sendBusyTone2 : Disconnect
     sendRingTone --> sendBusyTone2 : Connect Failed
+    sendBusyTone2 --> [*]
 }
-
-
-
 
 @enduml

@@ -36,7 +36,7 @@ t1 -> t1: validity
 
 alt s1 receives waittone in <= 1s
 s2 -> t1: Send_ConnectSuccess()
-t1 -> s1: Off_WaitTone()
+t1 ->> s1: Off_WaitTone()
 activate t1
 
 t1 --[#DDDDDD]> t1 : 

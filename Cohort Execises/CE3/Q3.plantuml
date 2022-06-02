@@ -27,21 +27,21 @@ t1 -> t1: validity
 
 ' Switch T1 sends a ring tone to S2 first, as S1 is first to call S2
 ' Switch T1 then does the same for S1
-t1 -> s2: Send_Ringtone()
-t1 -> s1: Send_Ringtone()
+t1 ->> s2: Send_Ringtone()
+t1 ->> s1: Send_Ringtone()
 
 ' A wait tone is first sent to S1, followed by S2
-t1 -> s1: Send_WaitTone()
-t1 -> s2: Send_WaitTone()
+t1 ->> s1: Send_WaitTone()
+t1 ->> s2: Send_WaitTone()
 
 'S1 times out first, and is the first caller to be sent a busy tone by T1
 
 s1 -> s1: Timeout(1 Sec)
-t1 -> s1: Send_BusyTone()
+t1 ->> s1: Send_BusyTone()
 
 ' the same then occurs for S2
 s2 -> s2: Timeout(1 Sec)
-t1 -> s2: Send_BusyTone()
+t1 ->> s2: Send_BusyTone()
 
 ' With both calls failing to establish, both S1 amd S2 hang up.
 s1 -> t1: Hangup
