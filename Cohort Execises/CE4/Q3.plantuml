@@ -1,0 +1,21 @@
+@startuml q3
+!theme toy
+[*] --> Idle : created
+
+
+Idle --> PreProcess : if receive input event
+
+PreProcess --> PreProcess : !pun
+
+PreProcess --> StateAccess : pun
+
+StateAccess --> StateAccess : !finish
+
+StateAccess --> PostProcess : finish
+
+PostProcess --> PreProcess : if finished
+
+Idle --> [*] : stop
+PreProcess --> [*] : stop
+
+@enduml
