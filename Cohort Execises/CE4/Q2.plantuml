@@ -1,9 +1,39 @@
 @startuml Q2
 !theme toy
 
-participant "S1:Caller" as s1
-participant "T1:Switch" as t1
-participant "S2:Caller" as s2
-participant "S3:Caller" as s3
+participant "P1: Partition" as p1
+participant "P2: Partition" as p2
+participant "C1: Shared Contructor" as c1
+participant "TPG" as tpg
+participant "S1: Scheduler" as s1
+participant "E1: Executor" as e1
+participant "E2: Executor" as e2
+
+p1 -> c1 : Input tuple, punctuation
+p2 -> c1 : Input tuple, punctuation
+c1 -> tpg ** : create
+c1 -> s1 : Signal to start actual tuple process
+s1 -> tpg : Ask for task
+
+group availale_task ["availale_task != None"]
+
+    tpg -> s1 : Availale task
+    group task_category ["task_category = 1"]
+        s1 -> e1 : Send task
+        e1 -[#DDDDDD]> e1 ++ 
+        e1 -[#DDDDDD]> e1 : Execute task
+        e1 -[#DDDDDD]> e1 -- 
+    else "task_category = 2"
+        s1 -> e2 : Send task
+        e2 -[#DDDDDD]> e2 ++ 
+        e2 -[#DDDDDD]> e2 : Execute task
+        e2 -[#DDDDDD]> e2 -- 
+    end
+
+else ["availale_task == None"]
+
+    tpg -> s1 : TPG fully explored
+
+end
 
 @enduml
