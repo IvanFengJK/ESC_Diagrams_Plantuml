@@ -1,0 +1,30 @@
+@startuml q5
+class Preprocess {
+    String[] data
+    filter()
+    stem()
+    batch()
+    collect()
+}
+class Learning {
+    String[] processedData
+    Object referenceTable
+    train()
+    classify()
+    detectTrend()
+    updateWeight()
+
+}
+class ModelManagement {
+    Object pruneTable
+    chooseModelUpdateStrategy()
+    updateModel()
+    mergeAllModels()
+    pruneModels()
+}
+
+Preprocess "1" <-- "1..*" Learning
+Learning "1..*" -- "1" ModelManagement
+
+
+@enduml

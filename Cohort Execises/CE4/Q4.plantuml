@@ -1,7 +1,62 @@
 @startuml q4
+!theme toy
+rectangle SentiStream {
 
-(test)
+    queue "Input stream" as inp
+    (a batch of words) as batch
+    rectangle "Preprocess Module" as 1 {
+        circle Filtering as a1 #FFFFFF;line:000000;text:000000
+        circle Stemming as a2 #FFFFFF;line:000000;text:000000
+        circle Batching as a3 #FFFFFF;line:000000;text:000000
+        database Collector as a4 #FFFFFF;line:000000;text:000000
+
+        inp -[#red]-> a1
+        a1 -[#blue]-> a2
+        a2 -[#blue]-> a3
+        a3 -[#red]-> batch
+        a3 .[#blue].> a4
+
+    }
+
+    rectangle "Incremental Learning Module" as 2 {
+        collections Windows 
+        
+        node "process of one window" as 1win {
+            circle Training as b1 #FFFFFF;line:000000;text:000000
+            usecase "Reference Table" as b2 #FFFFFF;line:000000;text:000000
+            circle Classifying as b3 #FFFFFF;line:000000;text:000000
+            circle "Trend Detection" as b4 #FFFFFF;line:000000;text:000000
+
+            b2 .[#blue].> b1
+            b1 -[#blue]-> b3
+            b3 -[#blue]-> b4
+            b4 .[#blue].> b3 : Feedback (Adjust weight)
 
 
+        }
+        Windows --> 1win
+        
+        
+        a4 -[#red]-> b1
+    }
+    rectangle "Model Management Module" as 3 {
+        circle "Model Pruning" as c1 #FFFFFF;line:000000;text:000000
+        circle "Model Merging" as c2 #FFFFFF;line:000000;text:000000
+        database "Local/Global Storage" as c3 #FFFFFF;line:000000;text:000000
+        collections "Embedding Models" as c4 #FFFFFF;line:000000;text:000000
+        
+        c4 -[#blue]-> c1 : Model update requests
+        c1 -[#blue]-> c2 : Model update and pruning requests
+        c2 -[#blue]-> c2 : Periodical
+        c2 -[#blue]-> c3 
+        c3 -[#blue]-> c4
+        b4 -[#red]-> c4
+    }
+}
+legend right
+	|Color|Type|
+	|<#ff0000>|Coupling|
+	|<#0000ff>|Cohesion|
+endlegend
 
 @enduml

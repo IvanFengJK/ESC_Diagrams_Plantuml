@@ -1,12 +1,49 @@
 @startuml
+!theme toy
 left to right direction
-actor "Food Critic" as fc
-rectangle Restaurant {
-  usecase "Eat Food" as UC1
-  usecase "Pay for Food" as UC2
-  usecase "Drink" as UC3
+
+
+actor "Hacker/Malicious Devices" as hmd #lightCoral;line:A80036;text:A80036
+actor "Applications/Devices" as ad
+database "Event Log" as el
+database "Persistent Storage" as ps
+
+
+rectangle dA_Streaming_Ledger{
+  usecase "Streaming Transactions across Tables" as st
+  usecase "Data Consolidation" as dc
+  usecase "Multiway Joins" as mj
+  usecase "Perform CRUD Operations" as cr
+
+  usecase "Install Malware/DDOS attack" as ddos #lightCoral;line:A80036;text:A80036
+  usecase "Install Spyware" as isy #lightCoral;line:A80036;text:A80036
 }
-fc --> UC1
-fc --> UC2
-fc --> UC3
+ad --> st
+ad --> dc
+ad --> mj
+ad --> cr
+
+st --> el
+dc --> el
+mj --> el
+cr --> el
+
+st --> ps
+dc --> ps
+mj --> ps
+cr --> ps
+
+hmd --> ddos
+hmd --> isy
+
+ddos --> st #A80036;line.dashed;text:A80036 : Threatens 
+ddos --> dc #A80036;line.dashed;text:A80036 : Threatens 
+ddos --> mj #A80036;line.dashed;text:A80036 : Threatens 
+ddos --> cr #A80036;line.dashed;text:A80036 : Threatens 
+
+
+isy --> st #A80036;line.dashed;text:A80036 : Spy 
+isy --> dc #A80036;line.dashed;text:A80036 : Spy 
+isy --> mj #A80036;line.dashed;text:A80036 : Spy 
+isy --> cr #A80036;line.dashed;text:A80036 : Spy 
 @enduml
