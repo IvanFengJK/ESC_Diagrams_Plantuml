@@ -15,9 +15,9 @@ c1 -> tpg ** : create
 c1 -> s1 : Signal to start actual tuple process
 s1 -> tpg : Ask for task
 
-group availale_task ["availale_task != None"]
+group available_task ["available_task != None"]
 
-    tpg -> s1 : Availale task
+    tpg -> s1 : available task
     group task_category ["task_category = 1"]
         s1 -> e1 : Send task
         e1 -[#DDDDDD]> e1 ++ 
@@ -30,7 +30,7 @@ group availale_task ["availale_task != None"]
         e2 -[#DDDDDD]> e2 -- 
     end
 
-else ["availale_task == None"]
+else ["available_task == None"]
 
     tpg -> s1 : TPG fully explored
 

@@ -12,7 +12,7 @@ class Learning {
     train()
     classify()
     detectTrend()
-    updateWeight()
+    updateWeight(
 
 }
 class ModelManagement {

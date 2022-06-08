@@ -55,8 +55,8 @@ rectangle SentiStream {
 }
 legend right
 	|Color|Type|
-	|<#ff0000>|Coupling|
-	|<#0000ff>|Cohesion|
+	|<color:red><size:40><&arrow-right></size></color>|Coupling|
+	|<color:blue><size:40><&arrow-right></size></color>|Cohesion|
 endlegend
 
 @enduml
