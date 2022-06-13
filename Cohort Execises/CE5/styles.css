@@ -1,0 +1,311 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100;400&display=swap");
+/* to use: font-family: 'Roboto Mono', monospace; */
+
+/* base reset */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* default body settings */
+html {
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+  /* Set font size for easy rem calculations
+   * default document font size = 16px, 1rem = 16px, 100% = 16px
+   * (100% / 16px) * 10 = 62.5%, 1rem = 10px, 62.5% = 10px
+   may 22: change to 8px: 50%
+  */
+  font-size: 70%;
+}
+
+/* base styles */
+body {
+  font-family: "Roboto Mono", monospace;
+  font-size: 1.7rem; /* 20px -- change to smaller font */
+  font-weight: 300;
+  line-height: 1.2;
+  color: #eeeeee;
+  background-color: #111111;
+}
+header {
+  font-family: "Roboto Mono", monospace;
+  font-size: 1.7rem; /* 20px -- change to smaller font */
+  font-weight: 300;
+  line-height: 1.2;
+  color: #222222;
+  background-color: #111111;
+  margin-top: 12rem;
+  align-items: center;
+}
+/* text styles */
+h1 {
+  font-weight: 600;
+  text-align: left;
+  font-size: 8rem;
+}
+h2 {
+  font-weight: 600;
+  font-size: 6rem;
+  text-align: left;
+}
+h3 {
+  font-weight: 500;
+  font-size: 4rem;
+}
+h4 {
+  font-weight: 400;
+  font-size: 3rem;
+}
+h5 {
+  font-weight: 400;
+}
+a:link {
+  padding-top: 15px;
+  padding-bottom: 8px;
+  color: #eeeeee;
+  text-decoration: none;
+}
+a:visited {
+  padding-top: 15px;
+  padding-bottom: 8px;
+  color: #eeeeee;
+  text-decoration: none;
+}
+a:hover {
+  color: #44e9ff;
+  transition-duration: 0.4s;
+  font-style: italic;
+}
+a:active {
+  color: #ff1e1e;
+  text-decoration: none;
+}
+
+#navbar {
+  display: grid;
+  text-align: center;
+  justify-content: center;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  background-color: #111111;
+  z-index: 10;
+}
+.gridfit {
+  grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+}
+.navlink {
+  transition-duration: 0.7s;
+}
+.navlink:hover {
+  background-color: #202020;
+  color: #44e9ff;
+  font-weight: 500;
+  font-style: italic;
+}
+.navlink:active {
+  color: #ff1e1e;
+  text-decoration: none;
+}
+
+#welcome {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+}
+
+#about {
+  padding-top: 8rem;
+  text-align: left;
+  padding-left: 5rem;
+  padding-right: 5rem;
+  margin-bottom: 5rem;
+  height: 100vh;
+  display: grid;
+  justify-content: center;
+}
+
+#about-img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+}
+
+#contact {
+  padding-top: 7rem;
+  text-align: center;
+  padding-left: 5rem;
+  padding-right: 5rem;
+  padding-bottom: 5rem;
+  height: 100vh;
+  display: grid;
+  justify-content: center;
+}
+
+
+/* A few media query to set some font sizes at different screen sizes.
+ * This helps automate a bit of responsiveness.
+ * The trick is to use the rem unit for size values, margin and padding.
+ * Because rem is relative to the document font size
+ * when we scale up or down the font size on the document
+ * it will affect all properties using rem units for the values.
+*/
+
+/* I am using the em unit for breakpoints
+ * The calculation is the following
+ * screen size divided by browser base font size
+ * As an example: a breakpoint at 980px
+ * 980px / 16px = 61.25em
+*/
+
+/* 1200px / 16px = 75em */
+@media (max-width: 75em) {
+  html {
+    font-size: 100%;
+  }
+  p {
+    font-size: 90%;
+  }
+}
+
+/* 980px / 16px = 61.25em */
+@media (max-width: 61.25em) {
+  html {
+    font-size: 58%;
+  }
+  p {
+    font-size: 90%;
+  }
+}
+
+/* 460px / 16px = 28.75em */
+@media (max-width: 28.75em) {
+  html {
+    font-size: 55%;
+  }
+  p {
+    font-size: 90%;
+  }
+  footer {
+    padding: 1rem;
+  }
+}
+
+/* Template from https://freefrontend.com/css-profile-cards/ */
+
+.container {
+  position: relative;
+  margin-top: 30rem;
+  max-width: 500px;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 10px;
+  justify-content: center;
+  align-items: center;
+  max-height: 200vh;
+  font-family: "Roboto Mono", monospace;
+  margin: auto;
+}
+
+.card {
+  background-color: #222831;
+  position: relative;
+  height: 100%;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.7);
+}
+
+.card__name {
+  margin-top: 15px;
+  font-size: 1.5em;
+}
+
+.card__image {
+  height: 120x;
+  width: 120px;
+  border-radius: 50%;
+  border: 5px solid #272133;
+  margin-top: 20px;
+  box-shadow: 0 10px 50px rgba(235, 25, 110, 1);
+}
+
+
+.draw-border {
+  box-shadow: inset 0 0 0 4px #58cdd1;
+  color: #58afd1;
+  -webkit-transition: color 0.25s 0.0833333333s;
+  transition: color 0.25s 0.0833333333s;
+  position: relative;
+}
+
+.draw-border::before,
+.draw-border::after {
+  border: 0 solid transparent;
+  box-sizing: border-box;
+  content: '';
+  pointer-events: none;
+  position: absolute;
+  width: 0rem;
+  height: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.draw-border::before {
+  border-bottom-width: 4px;
+  border-left-width: 4px;
+}
+
+.draw-border::after {
+  border-top-width: 4px;
+  border-right-width: 4px;
+}
+
+.draw-border:hover {
+  color: #ffe593;
+  font-style: italic;
+}
+
+.draw-border:hover::before,
+.draw-border:hover::after {
+  border-color: #eb196e;
+  -webkit-transition: border-color 0s, width 0.25s, height 0.25s;
+  transition: border-color 0s, width 0.25s, height 0.25s;
+  width: 100%;
+  height: 100%;
+}
+
+.draw-border:hover::before {
+  -webkit-transition-delay: 0s, 0s, 0.25s;
+  transition-delay: 0s, 0s, 0.25s;
+}
+
+.draw-border:hover::after {
+  -webkit-transition-delay: 0s, 0.25s, 0s;
+  transition-delay: 0s, 0.25s, 0s;
+}
+
+.btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  line-height: 1.5;
+  font-family: "Roboto Mono", monospace;
+  padding: 0.75em 2em;
+  letter-spacing: 0.05rem;
+  margin: 1em;
+  width: 13rem;
+}
+
+.btn:focus {
+  outline: 2px dotted #55d7dc;
+}
