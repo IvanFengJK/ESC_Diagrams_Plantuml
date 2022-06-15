@@ -37,6 +37,5 @@ const listener = app.listen("3000", function() {
 
 app.use((request, response, next) => {
   response.status(404).sendFile(__dirname + '/404_error.html');
-  response.end();
 })
 
