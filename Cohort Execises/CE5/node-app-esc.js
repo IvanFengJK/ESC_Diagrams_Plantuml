@@ -22,8 +22,16 @@ app.get('/contact', function(request, response) {
   response.sendFile(__dirname + '/contact.html');
 });
 
+app.get('/contact', function(request, response) {
+  response.sendFile(__dirname + '/contact.html');
+});
+
 // listen for requests :)
 const listener = app.listen("3000", function() {
   console.log('Your app is listening on port ' + listener.address().port);
 });
+
+app.use((req, res, next) => {
+  res.status(404).sendFile(__dirname + '/404_error.html');
+})
 
