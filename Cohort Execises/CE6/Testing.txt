@@ -1,0 +1,28 @@
+Cohort Execise 6:
+2 test cases are needed for statement coverage.
+
+It is the minimum because there are only two mutualy exclusive statements in each if condition.
+
+Cohort Exercise 7:
+3 test cases are needed for branch coverage.
+
+It is the minimum because there are 3 different execution branches in the first if condition. The second if condition only has 2 logically. Thus, minimum there needs to have 3 test cases for each of the 3 branches. 
+
+Cohort Exercise 8:
+Branch coverage test cases are suitable for condition coverage because each if condition only has one condition to check for. Therefore, by covering each branch, each condition will be covered, resulting in condition coverage. 
+
+Cohort Exercise 9:
+There are at most 100 iterations. 
+
+For each iteration, there are 4 valid execution paths. 
+
+We will write out some patterns.
+
+0 iteration -> 4^0=1 execution path
+1 iteration -> 4^1=4 execution paths
+....
+100 iterations -> 4^100 execution paths
+
+The sum is a geometric progression with common ratio of 4, starting at 1 and sum to 101 terms.
+
+Total number of execution paths = 1(4^101-1)/(4-1) = (4^101-1)/(3) =  2.142584059×10^60
