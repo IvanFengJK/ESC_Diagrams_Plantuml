@@ -1,0 +1,94 @@
+@startuml sage_use_cases
+!theme toy
+
+class "User" as user {
+    + result: Complex Number
+    + username: String
+    + chat_id: String
+    + profile_id: String
+    + realm_id: String
+    + first_name: String
+    + last_name: String
+    + name: String
+    + email: String
+    + role: String
+    + birth_year: Integer
+    + gender: String
+    + profile_picture: String
+    + learn: Array[String]
+    + share: Array[String]
+    + hobbies: Array[String]
+    + experience: Array[String]
+    + reason: String
+    + course_of_study: Array[String]
+    + references: Object
+    + max_requests: Integer
+    + linkedin: String
+    + profile_shared: Boolean
+    + is_tnc_accepted: Boolean
+    + is_banned: Boolean
+    + OTP_time: Date
+    + OTP: String
+    + time: Date
+    + time_formatted: String
+    + time_verified: Date
+    + time_verified_formatted: String
+    + time_created: Date
+
+
+
+
+    
+
+    
+
+}
+
+class "Unauthenticated user" as notLoggedIn {
+    - signup()
+    - login()
+
+
+}
+
+class "Authenticated user" as loggedIn {
+    - logout()
+    - sendRequest()
+    - cancelRequest()
+    - denyRequest()
+    - acceptRequest()
+
+}
+
+
+class "Apprentice (mentee)" as apprentice {
+
+}
+class "Sage (mentor)" as sage {
+
+}
+
+
+
+class "Request" as request {
+
+}
+
+class "Message" as message {
+
+}
+
+class "Chat" as chat {
+
+}
+
+class "Post" as post {
+
+}
+
+class "Comment" as comment {
+    = 
+
+}
+
+@enduml

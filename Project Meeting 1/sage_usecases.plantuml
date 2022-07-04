@@ -11,7 +11,7 @@ actor :Sage user: as sage
 "Send request" as (sendReq)
 "Cancel request" as (cancelReq)
 "Accept request" as (acceptReq)
-"Delete request" as (deleteReq)
+"Deny request" as (denyReq)
 "Edit profile details" as (editProfile)
 "Limit number of connections per month" as (limitConnections)
 "View profile" as (viewProfile)
@@ -48,7 +48,7 @@ sage --> (viewFeed)
 (loginAsSage) --> (viewFeed)
 (loginAsSage) --> (viewReqs)
 (viewReqs) --> (acceptReq)      : "if user is Sage"
-(viewReqs) --> (deleteReq)      : "if user is Sage"
+(viewReqs) --> (denyReq)      : "if user is Sage"
 (editProfile) --> (limitConnections) : "if user is Sage"
 
 
