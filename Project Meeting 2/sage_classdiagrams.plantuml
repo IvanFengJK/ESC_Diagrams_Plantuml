@@ -1,4 +1,5 @@
 @startuml sage_use_cases
+hide empty methods
 !theme toy
 
 class "User" as user {
@@ -35,6 +36,11 @@ class "User" as user {
     + time_verified_formatted: String
     + time_created: Date
 
+    + viewAllPosts()
+    + filterPosts()
+    + reportPost()
+    + sharePost()
+
 
 
 
@@ -53,10 +59,20 @@ class "Unauthenticated user" as notLoggedIn {
 
 class "Authenticated user" as loggedIn {
     - logout()
+    - viewAllRequests()
     - sendRequest()
     - cancelRequest()
     - denyRequest()
     - acceptRequest()
+    - shareProfile()
+    - hideProfile()
+    - editProfile()
+    - limitConnections()
+    - viewProfile()
+    - searchForSages()
+    - askQuestion()
+    - createPost()
+    - upvotePost()
 
 }
 
@@ -65,30 +81,166 @@ class "Apprentice (mentee)" as apprentice {
 
 }
 class "Sage (mentor)" as sage {
-
+    - createAMA()
+    - answerQuestion()
 }
 
 
 
 class "Request" as request {
-
+    + req_id: String
+    + requester: String
+    + sharer: String
+    + requester_chat_id: String
+    + sharer_chat_id: String
+    + requester_profile_id: String
+    + sharer_profile_id: String
+    + requester_name: String
+    + sharer_name: String
+    + participants: Array[String]
+    + is_premium: Boolean  
+    + purpose_of_req: String
+    + time_sent: Date
+    + time_sent_formatted: String
+    + time_ack: Date
+    + time_ack_formatted: String
+    + meeting_conducted_requester: Boolean
+    + meeting_conducted_sharer: Boolean
 }
 
 class "Message" as message {
+    + id: String
+    + content: String
+    + chat_id: String
+    + sender_profile_id: String
+    + sender_name: String
+    + time_sent: Date
+    + type: String
 
 }
 
 class "Chat" as chat {
+    + id: String
+    + participants: Array[String]
+    + last_updated: Date
+    + last_message: String
+    + last_message_type: String
+    + last_sender_name: String
+    + last_sender_profile_id: String
+
+    - sendMessage()
+}
+
+' Implemented as an abstract class because "Ask Me Anything" sessions & posts are closely related
+class "Abstract Post" as abstractPost {
+    + id: String
+    + type: String
+    + chat_id: String
+    + profile_id: String
+    + name: String
+    + username: String
+    + email: String
+    + is_member: Boolean
+    + time_expired: Date
+    + time_sent: Date
+    + time_sent_formatted: String
+}
+
+class "Post" as post extends abstractPost {
+}
+
+class "Ask Me Anything session" as ama extends abstractPost {
+    + ama_role: String
+    + ama_topic: String
+    + message_id: String
+}
+
+' Implemented as an interface because comment & question classes are unrelated
+class "Comment Interface" as commentInterface {
+    + id: String
+    + parent_id: String
+    + chat_id: String
+    + name: String
+    + profile_id: String
+    + email: String
+    + type: String
+    + content: String
+    + is_member: Boolean
+    + replier_chat_id: String
+    + replier_name: String
+    + replier_profile_id: String
+    + replier_email: String
+    + reply: String
+    + time_replied: Date
+    + time_replied_formatted: String
+    + time_sent: Date
+    + time_sent_formatted: String
 
 }
 
-class "Post" as post {
+class "Comment"  as comment implements commentInterface {
+    + id: String
+    + parent_id: String
+    + chat_id: String
+    + name: String
+    + profile_id: String
+    + email: String
+    + type: "post"
+    + content: String
+    + is_member: Boolean
+    + replier_chat_id: String
+    + replier_name: String
+    + replier_profile_id: String
+    + replier_email: String
+    + reply: String
+    + time_replied: Date
+    + time_replied_formatted: String
+    + time_sent: Date
+    + time_sent_formatted: String
 
 }
 
-class "Comment" as comment {
-    = 
+class "Question" as question implements commentInterface {
+    + id: String
+    + parent_id: String
+    + chat_id: String
+    + name: String
+    + profile_id: String
+    + email: String
+    + type: "ama"
+    + content: String
+    + is_member: Boolean
+    + replier_chat_id: String
+    + replier_name: String
+    + replier_profile_id: String
+    + replier_email: String
+    + reply: String
+    + time_replied: Date
+    + time_replied_formatted: String
+    + time_sent: Date
+    + time_sent_formatted: String
 
 }
+
+
+
+
+
+' Authentication relationships
+notLoggedIn --|> user
+loggedIn --|> user
+apprentice --|> loggedIn
+sage --|> loggedIn
+
+' Relationships for post | comment | question are found at their respective classes
+
+loggedIn -- "0..*" request
+loggedIn -- "0..*" question
+loggedIn -- "0..*" post
+post -- "0..*" comment
+loggedIn -- "0..*" chat
+chat -- "0..*" message
+sage -- "0..*" ama
+
 
 @enduml
