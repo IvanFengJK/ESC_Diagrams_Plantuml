@@ -1,0 +1,31 @@
+@startuml sage_use_cases
+!theme toy
+left to right direction
+actor :User: as user
+actor :Malicious user: as fool #pink;line:red;line.bold;text:red
+
+"Compare CSV data" as (compare)
+"Output mismatches to new CSV file" as (output)
+"Incorrect number of inputs to function" as (wrongNumberOfArgs) #pink;line:red;line.bold;text:red
+"CSV files have different ordering of headers" as (wrongOrderOfHeaders) #pink;line:red;line.bold;text:red
+"CSV files have different ordering of rows" as (wrongOrderOfRows) #pink;line:red;line.bold;text:red
+"Corrupted file" as (corruptedFile) #pink;line:red;line.bold;text:red
+"Wrong file format" as (wrongFileFormat) #pink;line:red;line.bold;text:red
+
+user --> (compare)
+(compare) --> (output)
+fool --> (wrongNumberOfArgs) #line:red;line.bold;text:red
+fool --> (wrongOrderOfHeaders) #line:red;line.bold;text:red
+fool --> (wrongOrderOfRows) #line:red;line.bold;text:red
+fool --> (corruptedFile) #line:red;line.bold;text:red
+fool --> (wrongFileFormat) #line:red;line.bold;text:red
+
+(wrongNumberOfArgs) --> (compare) #line:red;line.bold;text:red : "unable to execute function"
+(wrongOrderOfHeaders) --> (compare) #line:red;line.bold;text:red : "function erroneously outputs mismatches to new csv file"
+(wrongOrderOfRows) --> (compare) #line:red;line.bold;text:red : "function erroneously outputs mismatches to new csv file"
+(corruptedFile) --> (compare) #line:red;line.bold;text:red : "function unable to read file"
+(corruptedFile) --> (compare) #line:red;line.bold;text:red : "function unable to read file"
+
+
+
+@enduml
