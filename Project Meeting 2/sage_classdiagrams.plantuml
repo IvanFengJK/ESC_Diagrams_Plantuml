@@ -2,6 +2,43 @@
 hide empty methods
 !theme toy
 
+
+
+class "Unauthenticated user" as notLoggedIn {
+    - signup()
+    - login()
+
+
+}
+
+class "Authenticated user" as loggedIn {
+    - logout()
+    - viewAllRequests()
+    - sendRequest()
+    - cancelRequest()
+    - denyRequest()
+    - acceptRequest()
+    - shareProfile()
+    - hideProfile()
+    - editProfile()
+    - limitConnections()
+    - viewProfile()
+    - searchForSages()
+    - askQuestion()
+    - createPost()
+    - upvotePost()
+
+}
+
+
+class "Apprentice (mentee)" as apprentice {
+
+}
+class "Sage (mentor)" as sage {
+    - createAMA()
+    - answerQuestion()
+}
+
 class "User" as user {
     + result: Complex Number
     + username: String
@@ -40,54 +77,9 @@ class "User" as user {
     + filterPosts()
     + reportPost()
     + sharePost()
-
-
-
-
-    
-
-    
-
 }
 
-class "Unauthenticated user" as notLoggedIn {
-    - signup()
-    - login()
-
-
-}
-
-class "Authenticated user" as loggedIn {
-    - logout()
-    - viewAllRequests()
-    - sendRequest()
-    - cancelRequest()
-    - denyRequest()
-    - acceptRequest()
-    - shareProfile()
-    - hideProfile()
-    - editProfile()
-    - limitConnections()
-    - viewProfile()
-    - searchForSages()
-    - askQuestion()
-    - createPost()
-    - upvotePost()
-
-}
-
-
-class "Apprentice (mentee)" as apprentice {
-
-}
-class "Sage (mentor)" as sage {
-    - createAMA()
-    - answerQuestion()
-}
-
-
-
-class "Request" as request {
+    class "Request" as request {
     + req_id: String
     + requester: String
     + sharer: String
@@ -146,17 +138,8 @@ class "Abstract Post" as abstractPost {
     + time_sent_formatted: String
 }
 
-class "Post" as post extends abstractPost {
-}
-
-class "Ask Me Anything session" as ama extends abstractPost {
-    + ama_role: String
-    + ama_topic: String
-    + message_id: String
-}
-
 ' Implemented as an interface because comment & question classes are unrelated
-class "Comment Interface" as commentInterface {
+class "Abstract Comment" as abstractComment {
     + id: String
     + parent_id: String
     + chat_id: String
@@ -166,50 +149,33 @@ class "Comment Interface" as commentInterface {
     + type: String
     + content: String
     + is_member: Boolean
-    + replier_chat_id: String
-    + replier_name: String
-    + replier_profile_id: String
-    + replier_email: String
-    + reply: String
-    + time_replied: Date
-    + time_replied_formatted: String
     + time_sent: Date
     + time_sent_formatted: String
 
 }
 
-class "Comment"  as comment implements commentInterface {
-    + id: String
-    + parent_id: String
-    + chat_id: String
-    + name: String
-    + profile_id: String
-    + email: String
+
+
+class "Post" as post extends abstractPost {
+}
+
+class "Ask Me Anything session" as ama extends abstractPost {
+    + ama_role: String
+    + ama_topic: String
+    + message_id: String
+}
+
+
+
+class "Comment"  as comment extends abstractComment {
     + type: "post"
-    + content: String
-    + is_member: Boolean
-    + replier_chat_id: String
-    + replier_name: String
-    + replier_profile_id: String
-    + replier_email: String
-    + reply: String
-    + time_replied: Date
-    + time_replied_formatted: String
-    + time_sent: Date
-    + time_sent_formatted: String
-
 }
 
-class "Question" as question implements commentInterface {
-    + id: String
-    + parent_id: String
-    + chat_id: String
-    + name: String
-    + profile_id: String
-    + email: String
+class "Question" as question extends abstractComment {
     + type: "ama"
-    + content: String
-    + is_member: Boolean
+}
+
+class "Answer" as answer {
     + replier_chat_id: String
     + replier_name: String
     + replier_profile_id: String
@@ -217,10 +183,13 @@ class "Question" as question implements commentInterface {
     + reply: String
     + time_replied: Date
     + time_replied_formatted: String
-    + time_sent: Date
-    + time_sent_formatted: String
-
 }
+
+
+
+
+
+
 
 
 
@@ -233,14 +202,19 @@ apprentice --|> loggedIn
 sage --|> loggedIn
 
 ' Relationships for post | comment | question are found at their respective classes
+answer --|> question
+
 
 loggedIn -- "0..*" request
 loggedIn -- "0..*" question
 loggedIn -- "0..*" post
 post -- "0..*" comment
+ama -- "0..*" question
+question -- "0..*" answer
 loggedIn -- "0..*" chat
 chat -- "0..*" message
 sage -- "0..*" ama
+sage -- "0..*" answer
 
 
 @enduml
