@@ -1,0 +1,6 @@
+@startuml Feed
+User --> Frontend : onClick() of "Feed" on Navbar  
+Frontend --> Backend : router.push("/feed")
+Backend --> Frontend : axios.get(process.env.NEXT_PUBLIC_BACKEND_GET_AMAS);
+Frontend --> User : Returns FeedPost Components with data.map((questionDoc) => {<FeedPost postData=questionDoc/>}
+@enduml
