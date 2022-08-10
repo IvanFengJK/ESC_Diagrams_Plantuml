@@ -1,0 +1,14 @@
+@startuml queryText
+User --> Frontend : queryText()
+Frontend --> Backend : allProfiles.aggregate()
+Backend --> Backend : Atlas $search:{} find requested data
+Backend --> Frontend : setListOfSages()
+Frontend --> User : return(<SageList/>)
+
+User --> Frontend : <button>{User}</button>
+Frontend --> Backend : axios.post(process.env.NEXT_PUBLIC_BACKEND_GET_USER_DATA)
+Backend --> Backend : getData()
+Backend --> Backend : useRouter()
+Backend --> Frontend : setProfileData() 
+Frontend --> User : return({Components with data})
+@enduml
