@@ -1,0 +1,29 @@
+@startuml
+
+User -> Server: Sends POST request to ask new question\n to existing "Ask Me Anything" (AMA) session
+
+Server -> MongoDB: Insert question (Comment) document
+
+alt #LightBlue Success
+    
+    MongoDB -> Server: Sends status 200 (ok)
+    Server -> User: Sends status 200 (ok)
+
+    participant "Telegram API" as Telegram
+
+    Server ->> NodeMailer: Send email to host of AMA session
+
+    alt #LightGreen Host has Telegram
+        Server ->> Telegram: Send Telegram message to host's Telegram
+    end
+
+    
+
+
+else #Pink Failure
+
+    MongoDB -> Server: Sends status 400 (exception)
+    Server -> User: Sends status 400 (exception)
+end
+
+@enduml

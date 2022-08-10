@@ -7,12 +7,13 @@ Server -> MongoDB: Insert AMA document
 alt #LightBlue Success
     
     MongoDB -> Server: Sends status 200 (ok)
+    Server -> User: Sends status 200 (ok)
 
     participant "Telegram API" as Telegram
     participant "Telegram Bot" as Telebot
 
     Server ->> Telegram: Send Telegram message into Telegram channel
-    Server -> User: Sends status 200 (ok)
+    
     deactivate Server
     Telegram -> Telegram: Forwards message into Telegram group\nassociated with channel
     Telegram -> Telebot: Executes handleForwarded()
