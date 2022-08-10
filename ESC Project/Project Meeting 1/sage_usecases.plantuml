@@ -13,7 +13,7 @@ actor :Sage user: as sage
 "Accept request" as (acceptReq)
 "Deny request" as (denyReq)
 "Edit profile details" as (editProfile)
-"Limit number of connections per month" as (limitConnections)
+"Upload profile picture" as (uploadProfilePicture)
 "View profile" as (viewProfile)
 "Search for Sages" as (search)
 "View feed" as (viewFeed)
@@ -49,7 +49,7 @@ sage --> (viewFeed)
 (loginAsSage) --> (viewReqs)
 (viewReqs) --> (acceptReq)      : "if user is Sage"
 (viewReqs) --> (denyReq)      : "if user is Sage"
-(editProfile) --> (limitConnections) : "if user is Sage"
+(editProfile) --> (uploadProfilePicture)
 
 
 (search) --> (viewProfile)

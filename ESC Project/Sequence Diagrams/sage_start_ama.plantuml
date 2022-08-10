@@ -1,0 +1,34 @@
+@startuml
+
+User -> Server: Sends POST request to start new\n"Ask Me Anything" (AMA) session
+activate Server #FFBBBB
+Server -> MongoDB: Insert AMA document
+
+alt #LightBlue Success
+    
+    MongoDB -> Server: Sends status 200 (ok)
+
+    participant "Telegram API" as Telegram
+    participant "Telegram Bot" as Telebot
+
+    Server ->> Telegram: Send Telegram message into Telegram channel
+    Server -> User: Sends status 200 (ok)
+    deactivate Server
+    Telegram -> Telegram: Forwards message into Telegram group\nassociated with channel
+    Telegram -> Telebot: Executes handleForwarded()
+    activate Telebot
+    Telebot -> MongoDB: Insert Message ID into AMA document
+    alt #LightGreen Success
+        MongoDB -> Telebot: Sends status 200 (ok)
+    else #Pink Failure
+        MongoDB -> Telebot: Sends status 400 (exception)
+    end
+    deactivate Telebot
+
+else #Pink Failure
+
+    MongoDB -> Server: Sends status 400 (exception)
+    Server -> User: Sends status 400 (exception)
+end
+
+@enduml
