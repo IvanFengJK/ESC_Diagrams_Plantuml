@@ -3,6 +3,7 @@
 left to right direction
 actor :User: as publicUser
 actor :Sage user: as sage
+actor :Mallory: as mallory #red
 
 "Sign up" as (signup)
 "Log in" as (login)
@@ -15,7 +16,7 @@ actor :Sage user: as sage
 "Edit profile details" as (editProfile)
 "Upload profile picture" as (uploadProfilePicture)
 "View profile" as (viewProfile)
-"Search for Sages" as (search)
+"Search for Sages\n(with fuzzy search)" as (search)
 "View feed" as (viewFeed)
 "Create new post" as (createPost)
 "Comment on post" as (comment)
@@ -66,6 +67,26 @@ sage --> (viewFeed)
 (viewReqs) --> (cancelReq) : "if user is Sage"
 
 
+"Post spam or\nmalicious content" as (postSpam) #red
+(postSpam) --> (createPost) #red
+mallory --> (postSpam) #red
+
+"Send request\nwith no content" as (sendReq0) #red
+(sendReq0) --> (sendReq) #red
+mallory --> (sendReq0) #red
+
+"Create account\nwithout\nprofile pic" as (createAcctnopic) #red
+(createAcctnopic) --> (signup) #red
+mallory --> (createAcctnopic) #red
+
+"Typing incomplete\nor fuzzy query" as (typingIncomplete) #red
+(typingIncomplete) --> (search) #red
+mallory --> (typingIncomplete) #red
+
+(reportPost) -[#blue]-> (postSpam) 
+(sendReq) -[#blue]-> (sendReq0) : Not allowed if content does not exceed length
+(signup) -[#blue]-> (createAcctnopic) : Prompt user to upload pic, if not cannot sign up 
+(search) -[#blue]-> (typingIncomplete) : Fuzzy search resolves this 
 
 
 @enduml
